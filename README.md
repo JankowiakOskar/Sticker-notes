@@ -1,68 +1,64 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sticker Notes - short brief
 
-## Available Scripts
+App made for self development and to expand knowledge of huge React ecosystem.
+I used there a lot of currently using front-end technologies.
+In Brief it's CRUD, where you can store your notes,
+photos, search them by typing words, adding new and filter to favorites. App also has
+authorisation with JWT Token, form's and validations where i used Formik and Yup.
 
-In the project directory, you can run:
+### Technologies, libraries and description why I ve used them
 
-### `npm start`
+- Create-React-App - used for basic boilerplate application
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Redux - for keeping data state's and also authentication
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Hooks - for building functional components
 
-### `npm test`
+- Strapi - Headless CMS for communicate with Front-End, storing data and keep info about users
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React-Router - used for creation detail view for every
+  notes after opening and split view for favorites notes
 
-### `npm run build`
+- Styled Components - for styling every component and changing appearance or behavior depending on current state
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- GSAP - for making couple animations and loading page after authorisation or when user is logging out
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- React Loader Spinner - to notificate user during loading or getting data from server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React Tooltips - for explaining user's meaning icons
 
-### `npm run eject`
+- Axios - for making HTTP requests and communicate with server
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Formik - great library to creating complex forms, i used
+  to making form for adding items and auth users
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Yup - very well connected library with Formik for creation
+  validation for forms
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Moment - For displaying time when notes were created or updated
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+and couple more..
 
-## Learn More
+### Features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Multi Step Form - complex form during creating new users also has progress step bar to inform user which step and how many left stay to finish registration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Dropzone - complex input for adding files by clicking or drag and droping images
 
-### Code Splitting
+- Tooltips - description icon's meaning for users
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Searchbar - component which allows you looking note by typing word's
 
-### Analyzing the Bundle Size
+- CRUD - Simple. create, read, update and delete your item's
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- Favorite notification - small circle where you can see how many note's you ve added to favorites
 
-### Making a Progressive Web App
+- New item bar - another huge component with form and validation when you put your data to create new note with image
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- Authorisation - Creating, authenticate and logging out users
 
-### Advanced Configuration
+- Local Storage - keeping JWT Token in browser memory and checking if user is authenticated or not
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- Animations - couple small animations with GSAP library
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+and more..
