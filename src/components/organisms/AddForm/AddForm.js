@@ -76,8 +76,6 @@ const StyledDelete = styled(Delete)`
   cursor: pointer;
 `;
 
-const SupportedFilesTypes = [];
-
 const AddSchema = Yup.object().shape({
   title: Yup.string().required('Brak wymaganego tytułu').min(4, 'Twój tytuł jest za krótki'),
   text: Yup.string().required('Brak treści notatki').min(5, 'Tresć Twojej notatki jest za krótka'),

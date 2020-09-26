@@ -10,7 +10,7 @@ authorisation with JWT Token, form's and validations where i used Formik and Yup
 
 - Create-React-App - used for basic boilerplate application
 
-- Redux - for keeping data state's and also authentication
+- Redux - for keeping data state's and also authentication state
 
 - Hooks - for building functional components
 
