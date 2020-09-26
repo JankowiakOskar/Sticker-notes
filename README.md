@@ -6,7 +6,7 @@ In Brief it's CRUD, where you can store your notes,
 photos, search them by typing words, adding new and filter to favorites. App also has
 authorisation with JWT Token, form's and validations where i used Formik and Yup.
 
-### Technologies, libraries and description why I ve used them
+## Technologies, libraries and description why I ve used them
 
 - Create-React-App - used for basic boilerplate application
 
@@ -39,7 +39,7 @@ authorisation with JWT Token, form's and validations where i used Formik and Yup
 
 and couple more..
 
-### Features
+## Features
 
 - Multi Step Form - complex form during creating new users also has progress step bar to inform user which step and how many left stay to finish registration
 
@@ -62,3 +62,29 @@ and couple more..
 - Animations - couple small animations with GSAP library
 
 and more..
+
+## HOSTING & DEMO
+
+Backend:
+
+- Strapi (hosted by https://heroku.com)
+
+Frontend:
+
+- CRA (hosted by https://netlify.com)
+
+Link to see DEMO app: ....
+
+### Possibilities to sign in or sign up
+
+If you want test app you'd have create your own account,
+what's is realy simple and i really encourge you just go with multi
+step form when app is running then you will redirect to home page app.
+
+or
+
+You can login with these data:
+login: testuser123
+password: testuser123
+
+## Screenshots
