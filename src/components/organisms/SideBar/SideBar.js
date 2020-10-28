@@ -74,11 +74,11 @@ const StyledIconWrapper = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme, favoriteType }) => (favoriteType ? theme.red : theme.blue)};
+    background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.blue)};
   }
 
   &.active {
-    background-color: ${({ theme, favoriteType }) => (favoriteType ? theme.red : theme.blue)};
+    background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.blue)};
   }
 
   ${({ logOutIcon }) =>
@@ -119,8 +119,8 @@ const StyledButton = styled(Button)`
   font-size: ${({ theme }) => theme.fontSizes.m};
   transition: background-color 0.2s ease-in;
 
-  ${({ favoriteType }) =>
-    favoriteType &&
+  ${({ favoritetype }) =>
+    favoritetype &&
     css`
       background-color: ${({ theme }) => theme.red};
       color: ${({ theme }) => theme.white};
@@ -148,7 +148,7 @@ const StyledHeartIcon = styled(HeartFill)`
 `;
 const StyledAddFileIcon = styled(FileEarmarkPlus)`
   width: 50px;
-  color: ${({ theme, favoriteType }) => (favoriteType ? theme.white : theme.blue)};
+  color: ${({ theme, favoritetype }) => (favoritetype ? theme.white : theme.blue)};
 `;
 
 const StyledLogoutIcon = styled(LogoutCircle)`
@@ -167,7 +167,7 @@ const StyledCircle = styled(Circle)`
   }
 `;
 
-const SideBar = ({ isShownNewItemBar, showNewItemBar, logOutUser, allNotes }) => {
+const SideBar = ({ isShownNewItemBar, isShownModal, showNewItemBar, logOutUser, allNotes }) => {
   const pageType = useContext(PageContext);
   const circleRef = useRef(null);
   const currentLikedNotes = sumItemsWithKey(allNotes, 'favoriteNote');
@@ -185,11 +185,11 @@ const SideBar = ({ isShownNewItemBar, showNewItemBar, logOutUser, allNotes }) =>
     <StyledWrapper>
       <StyledButton
         width="150px"
-        favoriteType={pageType}
+        favoritetype={pageType}
         onClick={() => showNewItemBar()}
-        disabled={isShownNewItemBar}
+        disabled={isShownNewItemBar || isShownModal}
       >
-        <StyledAddFileIcon favoriteType={pageType} />
+        <StyledAddFileIcon favoritetype={pageType} />
       </StyledButton>
       <StyledNav>
         <StyledIconWrapper
@@ -209,7 +209,7 @@ const SideBar = ({ isShownNewItemBar, showNewItemBar, logOutUser, allNotes }) =>
           to="/favoritenotes"
           exact
           activeClassName="active"
-          favoriteType={pageType}
+          favoritetype={pageType}
           data-tip="Ulubione notatki"
           data-for="favoriteNotes"
         >
@@ -252,10 +252,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => {
-  const { isShownNewItemBar, notes } = state.data;
+  const {
+    isShownNewItemBar,
+    notes,
+    modal: { isShownModal },
+  } = state.data;
+
   return {
     isShownNewItemBar,
     allNotes: notes,
+    isShownModal,
   };
 };
 

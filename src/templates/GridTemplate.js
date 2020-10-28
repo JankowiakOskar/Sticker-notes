@@ -15,7 +15,6 @@ const StyledGrid = styled.div`
   min-height: 500px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 0 10px;
   grid-gap: 25px;
 
   @media (max-width: 1600px) {
@@ -24,6 +23,7 @@ const StyledGrid = styled.div`
   }
 
   @media (max-width: 1175px) {
+    padding: 10px;
     width: 100%;
     grid-template-columns: 1fr;
   }
@@ -35,7 +35,7 @@ const StyledEmptyWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 0.7;
+  opacity: 0.8;
 
   @media (max-width: 767px) {
     margin: 0;
@@ -70,7 +70,7 @@ const StyledParagraph = styled(Paragraph)`
 `;
 
 const StyledInput = styled(Input)`
-  background-color: ${({ theme, favoriteType }) => favoriteType && theme.red};
+  background-color: ${({ theme, favoritetype }) => favoritetype && theme.red};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -79,7 +79,7 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-const GridTemplate = ({ children, notes, headingTitle, favoriteType }) => {
+const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState([]);
   const headerRef = useRef(null);
@@ -95,6 +95,12 @@ const GridTemplate = ({ children, notes, headingTitle, favoriteType }) => {
       setSearchedItems([...matchedItems]);
     }
   };
+
+  useEffect(() => {
+    if (!searchValue.length) {
+      setSearchedItems([]);
+    }
+  }, [searchValue]);
 
   const calcItems = () => {
     return searchedItems.length ? getArrNum(searchedItems) : getArrNum(notes);
@@ -112,18 +118,42 @@ const GridTemplate = ({ children, notes, headingTitle, favoriteType }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!searchValue.length) {
-      setSearchedItems([]);
-    }
-  }, [searchValue]);
+  const findCards = (arrCards) => {
+    const anyCardExist = arrCards.length;
+    return anyCardExist ? (
+      <StyledGrid>
+        {arrCards.map(({ _id, note_title, note_content, createdAt, favoriteNote, note_file }) => (
+          <CardNote
+            key={_id}
+            id={_id}
+            title={note_title}
+            content={note_content}
+            createdAt={createdAt}
+            favoriteNote={favoriteNote}
+            photoUrl={note_file && note_file.url}
+          />
+        ))}
+      </StyledGrid>
+    ) : (
+      <StyledEmptyWrapper>
+        <EmptyBackGround />
+        <StyledHeading>
+          Nie znajduję notatki...
+          <span aria-label="note_emoji" role="img">
+            📝
+          </span>
+        </StyledHeading>
+        <StyledParagraph size="m">{`o nazwie: "${searchValue}"`}</StyledParagraph>
+      </StyledEmptyWrapper>
+    );
+  };
 
   return (
     <UserTemplate>
       <StyledHeader ref={headerRef}>
         <StyledHeading data-id="headerTitle">{headingTitle}</StyledHeading>
         <StyledParagraph data-id="countNotes" size="m" styled>
-          Ilość {favoriteType ? 'ulubionych' : 'wszystkich'} notatek: {calcItems()}
+          Ilość {favoritetype ? 'ulubionych' : 'wszystkich'} notatek: {calcItems()}
         </StyledParagraph>
         <StyledInput
           data-id="searchInput"
@@ -131,35 +161,31 @@ const GridTemplate = ({ children, notes, headingTitle, favoriteType }) => {
           value={searchValue}
           placeholder="szukaj notatki..."
           secondary
-          favoriteType={favoriteType}
+          favoritetype={favoritetype}
           onChange={(e) => handleChange(e)}
         />
       </StyledHeader>
       {notes.length ? (
-        <StyledGrid>
-          {searchedItems.length
-            ? searchedItems.map(({ _id, note_title, note_content, createdAt, favoriteNote }) => (
-                <CardNote
-                  key={_id}
-                  id={_id}
-                  title={note_title}
-                  content={note_content}
-                  createdAt={createdAt}
-                  favoriteNote={favoriteNote}
-                />
-              ))
-            : children}
-        </StyledGrid>
+        <>
+          {!searchValue ? (
+            <StyledGrid>{children}</StyledGrid>
+          ) : (
+            findCards(searchedItems, searchValue)
+          )}
+        </>
       ) : (
         <StyledEmptyWrapper>
           <EmptyBackGround />
           <StyledHeading>
-            {favoriteType ? 'Brak ulubionych notatek...' : 'Brak notatek...'}
+            {favoritetype ? 'Brak ulubionych notatek...' : 'Brak notatek...'}
+            <span aria-label="note_emoji" role="img">
+              📝
+            </span>
           </StyledHeading>
           <StyledParagraph size="m">
             {searchValue
               ? `Brak wyszukiwanej treści: "${searchValue}"`
-              : 'Dodaj kilka nowych notatek'}
+              : 'Proponuję dodać kilka nowych.'}
           </StyledParagraph>
         </StyledEmptyWrapper>
       )}
@@ -179,12 +205,12 @@ GridTemplate.propTypes = {
   ),
   children: PropTypes.instanceOf(Array).isRequired,
   headingTitle: PropTypes.string.isRequired,
-  favoriteType: PropTypes.string,
+  favoritetype: PropTypes.string,
 };
 
 GridTemplate.defaultProps = {
   notes: [],
-  favoriteType: '',
+  favoritetype: '',
 };
 
 export default GridTemplate;

@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 LoadingPage.propTypes = {
-  isShownLoader: PropTypes.func.isRequired,
+  isShownLoader: PropTypes.bool.isRequired,
   hideLoader: PropTypes.func.isRequired,
 };
 

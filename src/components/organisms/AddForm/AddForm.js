@@ -5,7 +5,13 @@ import Button from 'components/atoms/Button/Button';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import { addItem as addItemAction, HIDE_NEW_ITEM_BAR } from 'actions';
+import {
+  addItem as addItemAction,
+  updateItem as updateItemAction,
+  getItems as getItemsAction,
+  hideModal as hideModalAction,
+  HIDE_NEW_ITEM_BAR,
+} from 'actions';
 import TextField from 'components/molecules/TextField/TextField';
 import InputElement from 'components/molecules/InputElement/InputElement';
 import CheckBox from 'components/atoms/CheckBox/CheckBox';
@@ -90,23 +96,36 @@ const initialValues = {
   note_file: [],
 };
 
-const AddForm = ({ addItem, hideNewItemBar, isLoading }) => {
+const AddForm = ({ addItem, updateItem, hideNewItemBar, hideModal, isLoading, noteToEdit }) => {
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={
+        noteToEdit
+          ? {
+              title: noteToEdit.note_title,
+              text: noteToEdit.note_content,
+              favoriteNote: false,
+              checkUpload: false,
+              note_file: [],
+            }
+          : initialValues
+      }
       validationSchema={AddSchema}
       onSubmit={async ({ title, text, favoriteNote, note_file }, { resetForm }) => {
-        await addItem(
-          {
-            note_title: title,
-            note_content: text,
-            favoriteNote,
-            note_file: note_file[0],
-          },
-          'notes',
-        );
-        await hideNewItemBar();
-        await resetForm(initialValues);
+        const values = {
+          note_title: title,
+          note_content: text,
+          favoriteNote,
+          note_file: note_file[0],
+        };
+        if (noteToEdit) {
+          await updateItem('notes', noteToEdit.id, values);
+          await hideModal();
+        } else {
+          await addItem(values, 'notes');
+          await hideNewItemBar();
+          await resetForm(initialValues);
+        }
       }}
     >
       {({ values, setFieldValue }) => (
@@ -117,7 +136,12 @@ const AddForm = ({ addItem, hideNewItemBar, isLoading }) => {
             <CheckBox name="favoriteNote" label="Dodaj do ulubionych notatek " />
           </CheckBoxWrapper>
           <CheckBoxWrapper>
-            <CheckBox name="checkUpload" label="Czy chcesz dodać zdjęcie?" />
+            <CheckBox
+              name="checkUpload"
+              label={
+                noteToEdit ? 'Chcesz dodać / edytować zdjęcie ?' : 'Czy chcesz dodać zdjęcie ?'
+              }
+            />
           </CheckBoxWrapper>
           {values.checkUpload && (
             <DropzoneCard>
@@ -140,7 +164,7 @@ const AddForm = ({ addItem, hideNewItemBar, isLoading }) => {
 
           <StyledButton type="submit" disabled={isLoading}>
             {!isLoading ? (
-              'Dodaj notatkę'
+              <>{noteToEdit ? 'Edytuj notatkę' : 'Dodaj notatkę'}</>
             ) : (
               <Loader type="TailSpin" color="#FFFFFF" height={30} width={30} />
             )}
@@ -161,6 +185,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (item, itemType) => dispatch(addItemAction(item, itemType)),
     hideNewItemBar: () => dispatch({ type: HIDE_NEW_ITEM_BAR }),
+    hideModal: () => dispatch(hideModalAction()),
+    updateItem: (itemType, id, value) => dispatch(updateItemAction(itemType, id, value)),
+    getItems: (itemType) => dispatch(getItemsAction(itemType)),
   };
 };
 

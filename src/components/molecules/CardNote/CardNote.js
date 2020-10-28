@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
+import KebabMenu from 'components/molecules/KebabMenu/KebabMenu';
 import { useHistory, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteItem as deleteItemAction, updateItem as updateItemAction } from 'actions';
@@ -23,13 +24,14 @@ const StyledCard = styled.div`
   border: 2px solid ${({ theme }) => theme.dark};
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const StyledHeadingWrapper = styled.div`
   position: relative;
   flex: 1;
   padding: 10px 20px;
-  background-color: ${({ theme, favoriteType }) => (favoriteType ? theme.red : theme.dark)};
+  background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.dark)};
   color: ${({ theme }) => theme.white};
   border-bottom: 1px solid ${({ theme }) => theme.black};
 
@@ -59,7 +61,7 @@ const Avatar = styled.img`
   position: absolute;
   width: 80px;
   height: 80px;
-  border: 5px solid ${({ theme, favoriteType }) => (favoriteType ? theme.dark : theme.blue)};
+  border: 5px solid ${({ theme, favoritetype }) => (favoritetype ? theme.dark : theme.blue)};
   border-radius: 50%;
   right: 5px;
   top: 5px;
@@ -77,6 +79,7 @@ const StyledCardContent = styled.div`
 `;
 
 const StyledCardFooter = styled.div`
+  position: relative;
   flex: 1;
   border-top: 2px solid ${({ theme }) => theme.dark};
   display: flex;
@@ -87,7 +90,14 @@ const StyledCardFooter = styled.div`
 
 const StyledButton = styled(Button)`
   margin-right: 30px;
-  background-color: ${({ theme, favoriteType }) => (favoriteType ? theme.red : theme.blue)};
+  background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.blue)};
+`;
+
+const StyledKebabMenu = styled(KebabMenu)`
+  z-index: 6;
+  && {
+    margin: 0 10px 0 0;
+  }
 `;
 
 const StyledHeartIcon = styled(HeartFill)`
@@ -105,17 +115,9 @@ const StyledHeartIcon = styled(HeartFill)`
   }
 `;
 
-const CardNote = ({
-  id,
-  title,
-  content,
-  createdAt,
-  deleteItem,
-  favoriteNote,
-  updateItem,
-  photoUrl,
-}) => {
+const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, photoUrl }) => {
   const [isLiked, setLike] = useState(favoriteNote);
+
   const history = useHistory();
   const pageType = useContext(PageContext);
   const cardRef = useRef(null);
@@ -132,11 +134,6 @@ const CardNote = ({
     history.push(`${routes.notes}/${id}`);
   };
 
-  const handleClick = (event, itemType) => {
-    event.stopPropagation();
-    deleteItem(itemType, id);
-  };
-
   const handleLike = (event, itemType) => {
     event.stopPropagation();
     setLike(!isLiked);
@@ -144,32 +141,27 @@ const CardNote = ({
   };
 
   useEffect(showUpAnime, []);
+  useEffect(() => setLike(favoriteNote), [favoriteNote]);
 
   return (
     <StyledCard ref={cardRef} onClick={() => redirectRoute()} key={id}>
-      <StyledHeadingWrapper favoriteType={pageType}>
+      <StyledHeadingWrapper favoritetype={pageType}>
         <StyledHeading size="l">{title}</StyledHeading>
         <Paragraph size="m">Utworzona: {moment(createdAt).calendar()}</Paragraph>
         {photoUrl ? (
           <Avatar
             ref={avatarRef}
-            favoriteType={pageType}
-            src={`https://pacific-mesa-94829.herokuapp.com${photoUrl}`}
+            favoritetype={pageType}
+            src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`}
           />
         ) : null}
       </StyledHeadingWrapper>
       <StyledCardContent>
         <StyledParagraph size="m">{content}</StyledParagraph>
       </StyledCardContent>
-      <StyledCardFooter favoriteType={pageType}>
+      <StyledCardFooter favoritetype={pageType}>
         <StyledHeartIcon isLiked={isLiked} onClick={(event) => handleLike(event, 'notes')} />
-        <StyledButton
-          secondary
-          favoriteType={pageType}
-          onClick={(event) => handleClick(event, 'notes')}
-        >
-          Usuń
-        </StyledButton>
+        <StyledKebabMenu itemID={id} openCard={redirectRoute} />
       </StyledCardFooter>
     </StyledCard>
   );
@@ -178,7 +170,6 @@ const CardNote = ({
 const mapStateToProps = (state) => ({ allNotes: state.data.notes });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteItem: (itemType, id) => dispatch(deleteItemAction(itemType, id)),
   updateItem: (itemType, id, value) => dispatch(updateItemAction(itemType, id, value)),
 });
 
@@ -187,7 +178,6 @@ CardNote.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  deleteItem: PropTypes.func.isRequired,
   updateItem: PropTypes.func.isRequired,
   favoriteNote: PropTypes.bool.isRequired,
 };

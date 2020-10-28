@@ -22,16 +22,30 @@ export const UPDATE_ITEM_FAILURE = 'UPDATE_ITEM_FAILURE';
 export const SHOW_NEW_ITEM_BAR = 'SHOW_NEW_ITEM_BAR';
 export const HIDE_NEW_ITEM_BAR = 'HIDE_NEW_ITEM_BAR';
 
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE MODAL';
+
 const JWT_TOKEN = getItemFromLocalStorage('token');
+
+const createFormData = (fileName, file, dataObj) => {
+  const formData = new FormData();
+  formData.append(`files.${fileName}`, file, fileName);
+  formData.append('data', JSON.stringify(dataObj));
+
+  return formData;
+};
 
 export const getItems = (itemType) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`https://pacific-mesa-94829.herokuapp.com/${itemType}`, {
-        headers: {
-          Authorization: `Bearer ${JWT_TOKEN}`,
+      const { data } = await axios.get(
+        `https://organiser-strapi-mongodb.herokuapp.com/${itemType}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JWT_TOKEN}`,
+          },
         },
-      });
+      );
       dispatch({
         type: GET_ITEMS_SUCCESS,
         payload: {
@@ -51,25 +65,16 @@ export const getItems = (itemType) => {
 
 export const addItem = (values, itemType) => {
   const { note_file, note_title, note_content, favoriteNote } = values;
+
+  const dataUpload = note_file
+    ? createFormData('note_file', note_file, { note_title, note_content, favoriteNote })
+    : { note_title, note_content, favoriteNote };
+
   return async (dispatch) => {
     dispatch({ type: ADD_ITEM_REQUEST });
     try {
-      const formData = new FormData();
-
-      const dataObj = {
-        note_title,
-        note_content,
-        favoriteNote,
-      };
-
-      if (note_file) {
-        formData.append(`files.note_file`, note_file, 'note_file');
-        formData.append('data', JSON.stringify(dataObj));
-      }
-      const dataUpload = note_file ? formData : dataObj;
-
       const { data } = await axios.post(
-        `https://pacific-mesa-94829.herokuapp.com/${itemType}`,
+        `https://organiser-strapi-mongodb.herokuapp.com/${itemType}`,
         dataUpload,
         {
           headers: {
@@ -100,7 +105,7 @@ export const deleteItem = (itemType, id) => {
     const currentData = getState().data[itemType];
 
     try {
-      await axios.delete(`https://pacific-mesa-94829.herokuapp.com/${itemType}/${id}`, {
+      await axios.delete(`https://organiser-strapi-mongodb.herokuapp.com/${itemType}/${id}`, {
         headers: {
           Authorization: `Bearer ${JWT_TOKEN}`,
         },
@@ -122,13 +127,20 @@ export const deleteItem = (itemType, id) => {
   };
 };
 
-export const updateItem = (itemType, id, value) => {
+export const updateItem = (itemType, id, values) => {
+  const { note_file, note_title, note_content, favoriteNote } = values;
+
+  const dataUpload = note_file
+    ? createFormData('note_file', note_file, { note_title, note_content, favoriteNote })
+    : { note_title, note_content, favoriteNote };
+
   return async (dispatch, getState) => {
     const currentData = getState().data[itemType];
+    dispatch({ type: UPDATE_ITEM_REQUEST });
     try {
       const { data } = await axios.put(
-        `https://pacific-mesa-94829.herokuapp.com/${itemType}/${id}`,
-        value,
+        `https://organiser-strapi-mongodb.herokuapp.com/${itemType}/${id}`,
+        dataUpload,
         {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,
@@ -159,3 +171,6 @@ export const updateItem = (itemType, id, value) => {
 };
 
 export const deleteAllItems = () => ({ type: DELETE_ALLITEMS });
+
+export const showModal = (typeModal, id) => ({ type: SHOW_MODAL, payload: { typeModal, id } });
+export const hideModal = () => ({ type: HIDE_MODAL });

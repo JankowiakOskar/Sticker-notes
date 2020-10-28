@@ -2,6 +2,7 @@ const theme = {
   dark: '#231E3E',
   black: 'hsl(0%,0%,0%)',
   white: 'hsl(280, 18%, 99%)',
+  fullWhite: 'hsl(160, 100%, 99%)',
   blue: '#5D65D3',
   red: 'hsl(0, 65%, 44%)',
   fontWeights: {

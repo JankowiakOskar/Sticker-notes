@@ -8,9 +8,17 @@ import {
   UPDATE_ITEM_SUCCESS,
   SHOW_NEW_ITEM_BAR,
   HIDE_NEW_ITEM_BAR,
+  SHOW_MODAL,
+  HIDE_MODAL,
+  UPDATE_ITEM_REQUEST,
 } from 'actions';
 
 const initState = {
+  modal: {
+    isShownModal: false,
+    type: '',
+    id: '',
+  },
   isLoading: false,
   isShownNewItemBar: false,
   notes: [],
@@ -44,10 +52,16 @@ const notesReducer = (state = initState, action) => {
         ...state,
         notes: [],
       };
+    case UPDATE_ITEM_REQUEST:
+      return {
+        ...state,
+        isLoading: !state.isLoading,
+      };
     case UPDATE_ITEM_SUCCESS:
       return {
         ...state,
         [action.payload.itemType]: [...action.payload.data],
+        isLoading: !state.isLoading,
       };
     case SHOW_NEW_ITEM_BAR:
       return {
@@ -58,6 +72,24 @@ const notesReducer = (state = initState, action) => {
       return {
         ...state,
         isShownNewItemBar: !state.isShownNewItemBar,
+      };
+    case SHOW_MODAL:
+      return {
+        ...state,
+        modal: {
+          isShownModal: !state.modal.isShownModal,
+          type: action.payload.typeModal,
+          id: action.payload.id,
+        },
+      };
+    case HIDE_MODAL:
+      return {
+        ...state,
+        modal: {
+          isShownModal: !state.modal.isShownModal,
+          type: '',
+          id: '',
+        },
       };
     default:
       return state;

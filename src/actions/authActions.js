@@ -34,7 +34,7 @@ export const createUser = (userData) => {
       const {
         data: { jwt, user },
       } = await axios.post(
-        'https://pacific-mesa-94829.herokuapp.com/auth/local/register',
+        'https://organiser-strapi-mongodb.herokuapp.com/auth/local/register',
         qs.stringify(userData),
       );
 
@@ -68,7 +68,7 @@ export const loginUser = ({ email, password }) => {
       const {
         data: { jwt, user },
       } = await axios.post(
-        `https://pacific-mesa-94829.herokuapp.com/auth/local`,
+        `https://organiser-strapi-mongodb.herokuapp.com/auth/local`,
         qs.stringify({
           identifier: email,
           password,

@@ -11,7 +11,7 @@ const FavoriteNotesPage = ({ favoriteNotes }) => {
     <GridTemplate
       headingTitle="Twoje ulubione notatki"
       notes={favoriteNotes}
-      favoriteType={pageType}
+      favoritetype={pageType}
     >
       {favoriteNotes.map(
         ({ _id, note_title, note_content, createdAt, favoriteNote, note_file }) => (

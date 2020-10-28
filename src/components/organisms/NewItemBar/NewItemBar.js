@@ -77,7 +77,10 @@ const NewItemBar = ({ isShownNewItemBar, hideNewItemBar, children }) => {
   return (
     <StyledWrapper isOpen={isShownNewItemBar}>
       <StyledHeading>
-        Dodaj nową notatkę <StyledNoteIcon src={sticky_note} />
+        Dodaj nową notatkę{' '}
+        <span aria-label="add_note_emoji" role="img">
+          📝
+        </span>{' '}
       </StyledHeading>
       <StyledFormWrapper>{children}</StyledFormWrapper>
       <StyledCloseIcon onClick={() => hideNewItemBar()} />

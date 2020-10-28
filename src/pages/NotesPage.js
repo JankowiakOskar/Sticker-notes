@@ -6,10 +6,6 @@ import { connect } from 'react-redux';
 import { getItems as getItemsAction } from 'actions';
 
 const NotesPage = ({ allNotes, getItems }) => {
-  // useEffect(() => {
-  //   getItems('notes');
-  // }, []);
-
   return (
     <GridTemplate headingTitle="Twoje notatki" notes={allNotes}>
       {allNotes.map(({ _id, note_title, note_content, favoriteNote, createdAt, note_file }) => (
@@ -40,7 +36,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 NotesPage.propTypes = {
-  getItems: PropTypes.func.isRequired,
   allNotes: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,

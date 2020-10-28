@@ -44,12 +44,17 @@ const StyledButtonsWrapper = styled.div`
   align-items: flex-end;
 `;
 
-const NotePhoto = styled.img`
-  width: 100%;
-  height: 80%;
-  border-radius: 5px;
+const NotePhotoWrapper = styled.div`
+  max-width: 500px;
   border: 2px solid ${({ theme }) => theme.dark};
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
+`;
+
+const NotePhoto = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 5px;
 `;
 
 const StyledButton = styled(Button)`
@@ -77,7 +82,11 @@ const NoteDetailTemplate = ({
       <StyledNoteContent size="m">
         <strong>Treść</strong>: {content}
       </StyledNoteContent>
-      {photoUrl && <NotePhoto src={`https://pacific-mesa-94829.herokuapp.com${photoUrl}`} />}
+      {photoUrl && (
+        <NotePhotoWrapper>
+          <NotePhoto src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`} />
+        </NotePhotoWrapper>
+      )}
       <StyledButtonsWrapper>
         <StyledButton secondary onClick={goBack}>
           Wróć

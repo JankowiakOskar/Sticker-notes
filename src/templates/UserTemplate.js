@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SideBar from 'components/organisms/SideBar/SideBar';
 import AddForm from 'components/organisms/AddForm/AddForm';
 import NewItemBar from 'components/organisms/NewItemBar/NewItemBar';
+import ModalComponent from 'components/organisms/Modal/Modal';
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,6 +25,7 @@ const UserTemplate = ({ children }) => {
       <NewItemBar>
         <AddForm />
       </NewItemBar>
+      <ModalComponent />
       {children}
     </Wrapper>
   );
