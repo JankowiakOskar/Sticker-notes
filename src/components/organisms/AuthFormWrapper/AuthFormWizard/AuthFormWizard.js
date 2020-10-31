@@ -9,7 +9,7 @@ import Button from 'components/atoms/Button/Button';
 import ProgressStepper from 'components/molecules/Stepper/ProgressStepper';
 
 const StyledForm = styled.form`
-  padding: 15px 0px 0px 0;
+  padding: 12px 0px 0px 0;
   height: 100%;
   width: 100%;
   display: flex;

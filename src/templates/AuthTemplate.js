@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import routes from 'routes';
 import AuthFormWrapper from 'components/organisms/AuthFormWrapper/AuthFormWrapper';
 import { AuthTypeContext } from 'contexts';
-import { device } from 'theme/Devices';
 
 const Wrapper = styled.div`
   max-height: 600px;

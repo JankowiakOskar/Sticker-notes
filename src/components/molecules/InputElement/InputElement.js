@@ -12,6 +12,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledLabel = styled(Label)`
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
   z-index: 888;
   transform: translate(7px, -30px);
   transition: all 0.2s ease-in-out;
@@ -21,7 +22,7 @@ const StyledInput = styled(Input)`
   z-index: 999;
   &:focus ~ label {
     transform: translate(0, -60px);
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.lightblue};
   }
   ${({ value }) =>
     value.length &&
@@ -34,6 +35,7 @@ const StyledInput = styled(Input)`
 
 const StyledError = styled.p`
   color: ${({ theme }) => theme.red};
+  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
 `;
 
 const InputElement = (props) => {
@@ -43,9 +45,7 @@ const InputElement = (props) => {
   return (
     <StyledWrapper>
       <StyledInput {...props} {...field} error={() => !!error} />
-      <StyledLabel size="m" name={name}>
-        {error ? <StyledError>{error}</StyledError> : label}
-      </StyledLabel>
+      <StyledLabel name={name}>{error ? <StyledError>{error}</StyledError> : label}</StyledLabel>
     </StyledWrapper>
   );
 };

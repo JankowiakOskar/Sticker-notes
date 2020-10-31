@@ -1,9 +1,12 @@
 const theme = {
   dark: '#231E3E',
-  black: 'hsl(0%,0%,0%)',
+  black: 'hsl(0,0%,0%)',
   white: 'hsl(280, 18%, 99%)',
   fullWhite: 'hsl(160, 100%, 99%)',
+  grey: 'hsl(201, 23%, 34%)',
+  lightgrey: 'hsl(240, 3%, 87%)',
   blue: '#5D65D3',
+  lightblue: 'hsl(235, 89%, 72%)',
   red: 'hsl(0, 65%, 44%)',
   fontWeights: {
     bold: '800',
@@ -11,10 +14,10 @@ const theme = {
   },
   fontSizes: {
     xs: '0.8rem',
-    s: '1.1rem',
+    s: '1.3rem',
     m: '1.4rem',
-    l: '2.2rem',
-    xl: '3.5rem',
+    l: '2.5rem',
+    xl: '2.8rem',
     xxl: '4.5rem',
   },
   screenSizes: {
@@ -25,7 +28,7 @@ const theme = {
     xl: '1600px',
   },
   boxShadow: {
-    inset: 'inset -5px -4px 40px 5px rgba(0, 0, 0, 0.2);',
+    inset: 'inset -5px -4px 40px 5px rgba(0, 0, 0, 0.2)',
   },
 };
 

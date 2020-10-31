@@ -14,7 +14,7 @@ const StyledTextArea = styled.textarea`
   max-width: 350px;
   height: 100px;
   padding: 5px;
-  border: 3px solid ${({ theme }) => theme.blue};
+  border: 2px solid ${({ theme }) => theme.lightblue};
   border-radius: 5px;
   z-index: 999;
   resize: none;
@@ -22,7 +22,7 @@ const StyledTextArea = styled.textarea`
 
   &:focus ~ label {
     transform: translate(0px, -130px);
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.lightblue};
   }
   ${({ value }) =>
     value.length &&
@@ -38,14 +38,13 @@ const StyledTextArea = styled.textarea`
 const StyledLabel = styled(Label)`
   padding: 5px;
   transform: translate(7px, -100px);
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  font-size: ${({ theme }) => theme.fontSizes.m};
   z-index: 888;
   transition: all 0.2s ease-in-out;
 `;
 
 const StyledError = styled.p`
   color: ${({ theme }) => theme.red};
+  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
 `;
 
 const TextField = (props) => {

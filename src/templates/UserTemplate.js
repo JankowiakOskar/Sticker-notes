@@ -7,15 +7,17 @@ import NewItemBar from 'components/organisms/NewItemBar/NewItemBar';
 import ModalComponent from 'components/organisms/Modal/Modal';
 
 const Wrapper = styled.div`
+  max-width: 1700px;
   position: relative;
-  width: 100vw;
+  width: calc(100% - 180px);
   min-height: 100vh;
   padding-bottom: 50px;
-  padding-left: 250px;
+  margin-left: 180px;
   overflow-y: hidden;
 
   @media (max-width: 767px) {
-    padding: 0;
+    margin: 0;
+    width: 100%;
   }
 `;
 const UserTemplate = ({ children }) => {

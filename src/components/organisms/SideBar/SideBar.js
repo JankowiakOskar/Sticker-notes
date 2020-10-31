@@ -28,7 +28,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.dark};
   box-shadow: 0px 6px 12px -4px rgba(0, 0, 0, 0.75);
-  border: 3px solid ${({ theme }) => theme.black};
+  border-right: 1px solid ${({ theme }) => theme.black};
   z-index: 9999;
 
   @media (max-width: 767px) {
@@ -112,10 +112,11 @@ const StyledIconWrapper = styled.li`
 
 const StyledButton = styled(Button)`
   margin: 50px 0 0 0;
+  height: 50px;
   padding: 25px 0;
   background-color: ${({ theme }) => theme.white};
   color: ${({ theme }) => theme.blue};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
   font-size: ${({ theme }) => theme.fontSizes.m};
   transition: background-color 0.2s ease-in;
 

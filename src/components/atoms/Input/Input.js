@@ -6,7 +6,7 @@ const Input = styled.input`
   padding: 10px 25px;
   border: none;
   border-radius: 3px;
-  border-bottom: 3px solid ${({ theme }) => theme.blue};
+  border-bottom: 2px solid ${({ theme }) => theme.lightblue};
   transition: background-color 0.2s ease-in;
 
   &::placeholder {

@@ -99,7 +99,7 @@ const AuthFormWrapper = () => {
     <Wrapper>
       <Header>
         <Heading>{authType === 'login' ? 'Zaloguj się' : 'Rejestracja'}</Heading>
-        <Paragraph size="m">
+        <Paragraph size="m" color="white">
           {authType === 'login'
             ? 'Wprowadź swoje dane, aby się zalogować'
             : 'Uzupełnij dane, aby założyć nowe konto'}

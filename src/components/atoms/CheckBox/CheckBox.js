@@ -13,7 +13,7 @@ const InputCheckBox = styled.input`
   width: 25px;
   height: 25px;
   appearance: none;
-  border: 2px solid ${({ theme }) => theme.blue};
+  border: 2px solid ${({ theme }) => theme.lightblue};
   border-radius: 4px;
   transition: all 0.15s ease-in-out;
   background-color: transparent;
@@ -48,6 +48,7 @@ const Label = styled.label`
   padding: 0 0 0 10px;
   font-size: ${({ theme, size }) => size && theme.fontSizes[size]};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.grey};
 `;
 
 const CheckBox = (props) => {

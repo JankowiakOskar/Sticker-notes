@@ -7,19 +7,23 @@ import gsap from 'gsap';
 const Wrapper = styled.div`
   width: 100%;
   padding: 0 7px;
+  margin: 0 0 15px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
 const StepWrapper = styled.div`
+  height: 90px;
+  width: 90px;
   display: flex;
   flex-direction: column;
-  flex-direction: space-between;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const Circle = styled.div`
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,9 +38,12 @@ const Circle = styled.div`
 `;
 
 const StyledParagraph = styled(Paragraph)`
-  padding: 10px 0;
+  padding-top: 3px;
+  height: 40px;
+  display: block;
   text-align: center;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme, isActive }) => isActive && theme.black};
 `;
 
 const LineWrapper = styled.div`
@@ -94,7 +101,9 @@ const ProgressStepper = ({ steps, activeStep = 1 }) => {
             <Circle isActive={isActive} isStepDone={isStepDone}>
               {isStepDone ? <StyledDone ref={iconDoneRef} /> : `${step.content}`}
             </Circle>
-            <StyledParagraph size="s">{step.title}</StyledParagraph>
+            <StyledParagraph size="m" isActive={isActive}>
+              {step.title}
+            </StyledParagraph>
           </StepWrapper>
         ) : (
           <React.Fragment key={step.title}>
@@ -102,7 +111,9 @@ const ProgressStepper = ({ steps, activeStep = 1 }) => {
               <Circle isActive={isActive}>
                 {isStepDone ? <StyledDone ref={iconDoneRef} /> : `${step.content}`}
               </Circle>
-              <StyledParagraph size="s">{step.title}</StyledParagraph>
+              <StyledParagraph size="m" isActive={isActive}>
+                {step.title}
+              </StyledParagraph>
             </StepWrapper>
             <LineWrapper>
               <Line>

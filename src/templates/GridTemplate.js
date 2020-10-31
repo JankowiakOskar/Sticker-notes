@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -11,26 +12,35 @@ import gsap from 'gsap';
 import { getArrNum } from 'utils';
 
 const StyledGrid = styled.div`
-  width: 90%;
+  width: 100%;
+  margin: 0 0 0 80px;
   min-height: 500px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 25px;
+  gap: 30px 0px;
 
   @media (max-width: 1600px) {
-    width: 80%;
+    width: 85%;
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 1175px) {
-    padding: 10px;
-    width: 100%;
     grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 40px;
+    margin: 30px 0 0 0;
+    padding: 0px 20px 80px;
   }
 `;
 
 const StyledEmptyWrapper = styled.div`
-  margin: 50px 200px 0 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,10 +66,10 @@ const EmptyBackGround = styled.div`
 `;
 
 const StyledHeader = styled.div`
-  padding: 30px 0;
+  padding: 30px 80px;
 
   @media (max-width: 767px) {
-    padding: 20px 10px 30px;
+    padding: 30px 20px 0;
   }
 `;
 
@@ -71,12 +81,18 @@ const StyledParagraph = styled(Paragraph)`
 
 const StyledInput = styled(Input)`
   background-color: ${({ theme, favoritetype }) => favoritetype && theme.red};
+  border-radius: 25px;
 `;
 
 const StyledHeading = styled(Heading)`
   @media (max-width: 767px) {
     font-size: ${({ theme }) => theme.fontSizes.l};
   }
+`;
+
+const Emoji = styled.span`
+  font-size: 2rem;
+  margin: 0 0 0 10px;
 `;
 
 const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
@@ -137,11 +153,11 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
     ) : (
       <StyledEmptyWrapper>
         <EmptyBackGround />
-        <StyledHeading>
+        <StyledHeading size="l">
           Nie znajduję notatki...
-          <span aria-label="note_emoji" role="img">
+          <Emoji aria-label="note_emoji" role="img">
             📝
-          </span>
+          </Emoji>
         </StyledHeading>
         <StyledParagraph size="m">{`o nazwie: "${searchValue}"`}</StyledParagraph>
       </StyledEmptyWrapper>
@@ -176,11 +192,11 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
       ) : (
         <StyledEmptyWrapper>
           <EmptyBackGround />
-          <StyledHeading>
+          <StyledHeading size="l">
             {favoritetype ? 'Brak ulubionych notatek...' : 'Brak notatek...'}
-            <span aria-label="note_emoji" role="img">
+            <Emoji aria-label="note_emoji" role="img">
               📝
-            </span>
+            </Emoji>
           </StyledHeading>
           <StyledParagraph size="m">
             {searchValue

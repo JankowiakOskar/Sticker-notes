@@ -27,7 +27,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 50px 0 0;
+  margin: 40px 0 0;
 
   @media (max-width: 768px) {
     margin: 20px 0 0;
@@ -62,6 +62,7 @@ const FileConfirm = styled.span`
   padding: 0 10px;
   opacity: 0;
   font-size: ${({ theme }) => theme.fontSizes.m};
+  color: ${({ theme }) => theme.grey};
   animation: ${showAnimation} 0.3s forwards ease-in-out;
 `;
 const StyledDone = styled(Done)`
@@ -128,10 +129,10 @@ const AddForm = ({ addItem, updateItem, hideNewItemBar, hideModal, isLoading, no
         }
       }}
     >
-      {({ values, setFieldValue }) => (
-        <StyledForm as={Form}>
+      {({ values, setFieldValue, className }) => (
+        <StyledForm as={Form} className={className}>
           <InputElement name="title" label="Tytuł notatki" type="text" />
-          <TextField name="text" label="Treść notatki" />
+          <TextField name="text" label="Treść notatki..." />
           <CheckBoxWrapper>
             <CheckBox name="favoriteNote" label="Dodaj do ulubionych notatek " />
           </CheckBoxWrapper>

@@ -1,52 +1,49 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/accessible-emoji */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
 import { CloseCircle } from '@styled-icons/ionicons-sharp/CloseCircle';
 import { connect } from 'react-redux';
 import { HIDE_NEW_ITEM_BAR } from 'actions';
-import sticky_note from 'assets/svg/sticky_note.svg';
 
 const StyledWrapper = styled.div`
   position: fixed;
   bottom: 0;
   right: -5px;
   width: 500px;
-  height: 105vh;
+  height: 100vh;
   background-color: ${({ theme }) => theme.white};
-  border: 5px solid ${({ theme }) => theme.dark};
+  border-left: 5px solid ${({ theme }) => theme.dark};
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
   transition: transform 0.2s ease-in-out;
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '100%')});
   z-index: 9999;
 
   @media (max-width: 767px) {
+    width: 97%;
     height: 100%;
-    width: 100%;
+    border-radius: 25px 0 0 25px;
+  }
+`;
+
+const InnerWrapper = styled.div`
+  padding: 100px 40px;
+
+  @media (max-width: 767px) {
+    padding: 50px 25px;
   }
 `;
 
 const StyledHeading = styled(Heading)`
-  margin-top: 100px;
-  padding: 0 0 5px 30px;
-  color: ${({ theme }) => theme.dark};
-  border-bottom: 3px solid ${({ theme }) => theme.dark};
+  padding: 0 0 10px;
+  border-bottom: 1px solid hsl(240, 3%, 87%);
   display: flex;
   align-items: center;
-
-  @media (max-width: 767px) {
-    margin: 0;
-    padding: 20px 10px;
-    font-size: ${({ theme }) => theme.fontSizes.l};
-  }
 `;
 
 const StyledFormWrapper = styled.div`
-  margin: 50px 30px;
-
-  @media (max-width: 767px) {
-    margin: 10px 10px;
-  }
+  margin: 25px 0;
 `;
 
 const StyledCloseIcon = styled(CloseCircle)`
@@ -63,35 +60,47 @@ const StyledCloseIcon = styled(CloseCircle)`
   }
 
   @media (max-width: 767px) {
-    right: 5px;
+    right: 20px;
     bottom: 20px;
   }
 `;
 
-const StyledNoteIcon = styled.img`
-  width: 50px;
-  fill: ${({ theme }) => theme.dark};
+const Emoji = styled.span`
+  margin: 0 0 0 10px;
+  font-size: 2.2rem;
 `;
 
-const NewItemBar = ({ isShownNewItemBar, hideNewItemBar, children }) => {
+const NewItemBar = ({ isShownNewItemBar, hideNewItemBar, isShownModal, children }) => {
+  useEffect(() => {
+    if (isShownModal && isShownNewItemBar) {
+      hideNewItemBar();
+    }
+  }, [isShownModal, isShownNewItemBar]);
+
   return (
     <StyledWrapper isOpen={isShownNewItemBar}>
-      <StyledHeading>
-        Dodaj nową notatkę{' '}
-        <span aria-label="add_note_emoji" role="img">
-          📝
-        </span>{' '}
-      </StyledHeading>
-      <StyledFormWrapper>{children}</StyledFormWrapper>
-      <StyledCloseIcon onClick={() => hideNewItemBar()} />
+      <InnerWrapper>
+        <StyledHeading size="l">
+          Dodaj nową notatkę{' '}
+          <Emoji aria-label="add_note_emoji" role="img">
+            📝
+          </Emoji>{' '}
+        </StyledHeading>
+        <StyledFormWrapper>{children}</StyledFormWrapper>
+        <StyledCloseIcon onClick={() => hideNewItemBar()} />
+      </InnerWrapper>
     </StyledWrapper>
   );
 };
 
 const mapStateToProps = (state) => {
-  const { isShownNewItemBar } = state.data;
+  const {
+    isShownNewItemBar,
+    modal: { isShownModal },
+  } = state.data;
   return {
     isShownNewItemBar,
+    isShownModal,
   };
 };
 

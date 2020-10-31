@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
-import Button from 'components/atoms/Button/Button';
 import KebabMenu from 'components/molecules/KebabMenu/KebabMenu';
 import { useHistory, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,24 +18,31 @@ const StyledCard = styled.div`
   height: 400px;
   max-width: 440px;
   opacity: 0;
-  border-radius: 5px;
+  border-radius: 20px;
   box-shadow: 0px 6px 12px -4px rgba(0, 0, 0, 0.75);
   border: 2px solid ${({ theme }) => theme.dark};
   display: flex;
   flex-direction: column;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    max-width: 350px;
+    max-height: 350px;
+  }
 `;
 
 const StyledHeadingWrapper = styled.div`
   position: relative;
   flex: 1;
   padding: 10px 20px;
+  border-radius: 18px 18px 0px 0px;
   background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.dark)};
   color: ${({ theme }) => theme.white};
   border-bottom: 1px solid ${({ theme }) => theme.black};
 
   @media (max-width: 767px) {
-    padding: 10px;
+    padding: 10px 0px 0px 20px;
+    max-height: 150px;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -82,15 +88,15 @@ const StyledCardFooter = styled.div`
   position: relative;
   flex: 1;
   border-top: 2px solid ${({ theme }) => theme.dark};
+  border-radius: 25px 25px 18px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.dark};
-`;
 
-const StyledButton = styled(Button)`
-  margin-right: 30px;
-  background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.blue)};
+  @media (max-width: 767px) {
+    flex: 1.5;
+  }
 `;
 
 const StyledKebabMenu = styled(KebabMenu)`
@@ -147,7 +153,9 @@ const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, pho
     <StyledCard ref={cardRef} onClick={() => redirectRoute()} key={id}>
       <StyledHeadingWrapper favoritetype={pageType}>
         <StyledHeading size="l">{title}</StyledHeading>
-        <Paragraph size="m">Utworzona: {moment(createdAt).calendar()}</Paragraph>
+        <StyledParagraph size="m" color="white">
+          Utworzona: {moment(createdAt).calendar()}
+        </StyledParagraph>
         {photoUrl ? (
           <Avatar
             ref={avatarRef}

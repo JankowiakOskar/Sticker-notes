@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import KebabButton from 'components/atoms/KebabButton/KebabButton';
 import { connect } from 'react-redux';
@@ -24,21 +24,25 @@ const MenuList = styled.ul`
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
 `;
 
 const MenuElement = styled.li`
   position: relative;
-  padding: 15px 10px;
+  padding: 15px 35px;
   max-height: 50px;
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes.m};
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${({ theme }) => theme.lightgrey};
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    opacity: 0.7;
+    background-color: ${({ theme }) => theme.lightgrey};
   }
+
+  
 
   &:after {
     display: flex;
@@ -46,11 +50,11 @@ const MenuElement = styled.li`
     align-items: center;
     position: absolute;
     content: '${({ icon }) => icon}';
-    font-size: ${({ theme }) => theme.fontSizes.l};
+    font-size: ${({ theme }) => theme.fontSizes.m};
     width: 40px;
     height: 100%;
     top: 50%;
-    right: 50px;
+    left: 0px;
     transform: translate(0, -50%);
   }
 `;

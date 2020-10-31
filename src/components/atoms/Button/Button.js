@@ -12,10 +12,9 @@ const Button = styled.button`
   color: ${({ theme }) => theme.white};
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
-  translate: transform 0.2s ease-in-out;
 
   &:hover {
-    transform: scale(1.03);
+    opacity: 0.9;
   }
 
   ${({ secondary }) =>
@@ -23,6 +22,16 @@ const Button = styled.button`
     css`
       width: 100px;
       background-color: ${({ theme }) => theme.blue};
+    `}
+
+  ${({ thirdiary }) =>
+    thirdiary &&
+    css`
+      width: 100px;
+      background-color: ${({ theme }) => theme.white};
+      border: 1px solid ${({ theme }) => theme.blue};
+      box-shadow: none;
+      color: ${({ theme }) => theme.grey};
     `}
 `;
 

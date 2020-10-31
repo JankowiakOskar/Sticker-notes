@@ -7,7 +7,7 @@ const Circle = styled.div`
   width: 23px;
   height: 23px;
   border-radius: 50%;
-  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-size: ${({ theme }) => theme.fontSizes.m};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   background-color: ${({ theme }) => theme.white};
   color: ${({ theme }) => theme.red};

@@ -6,7 +6,7 @@ const DropzoneWrapper = styled.div`
   height: 120px;
   width: 120px;
   background-color: ${({ theme, highlight }) => (highlight ? 'rgb(188, 185, 236)' : theme.white)};
-  border: 2px dashed ${({ theme }) => theme.blue};
+  border: 2px dashed ${({ theme }) => theme.lightblue};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -14,6 +14,7 @@ const DropzoneWrapper = styled.div`
   flex-direction: column;
   font-size: ${({ theme }) => theme.fontSizes.m};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.grey};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
@@ -32,7 +33,7 @@ const DropzoneWrapper = styled.div`
 `;
 
 const Icon = styled.img`
-  opacity: 0.6;
+  opacity: 0.5;
   width: 50px;
   height: 50px;
 
