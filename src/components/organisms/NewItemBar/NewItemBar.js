@@ -24,6 +24,7 @@ const StyledWrapper = styled.div`
     width: 97%;
     height: 100%;
     border-radius: 25px 0 0 25px;
+    overflow-y: scroll;
   }
 `;
 
@@ -31,7 +32,7 @@ const InnerWrapper = styled.div`
   padding: 100px 40px;
 
   @media (max-width: 767px) {
-    padding: 50px 25px;
+    padding: 25px;
   }
 `;
 
@@ -40,6 +41,10 @@ const StyledHeading = styled(Heading)`
   border-bottom: 1px solid hsl(240, 3%, 87%);
   display: flex;
   align-items: center;
+
+  @media (max-width: 767px) {
+    font-size: ${({ theme }) => theme.fontSizes.mobileLarge};
+  }
 `;
 
 const StyledFormWrapper = styled.div`

@@ -11,7 +11,7 @@ import moment from 'moment';
 import 'moment/locale/pl';
 
 const StyledWrapper = styled.div`
-  margin-top: 50px;
+  margin: 50px 0 0 80px;
   max-width: 750px;
   min-height: 450px;
   padding: 20px 50px;
@@ -19,42 +19,56 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  border: 3px solid ${({ theme }) => theme.dark};
-  border-radius: 5px;
-  box-shadow: ${({ theme }) => theme.boxShadow.inset};
+  border: 2px solid ${({ theme }) => theme.lightgrey};
+  border-radius: 25px;
   overflow: hidden;
+
+  @media (max-width: 767px) {
+    margin: 50px auto;
+    padding: 20px 10px 20px 20px;
+    min-height: auto;
+    width: 88%;
+  }
+`;
+
+const Header = styled.div`
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.lightgrey};
 `;
 
 const StyledTimeCreated = styled(Paragraph)`
   padding: 5px 0;
-  font-weight: bold;
 `;
 
 const StyledNoteContent = styled(Paragraph)`
+  color: ${({ theme }) => theme.black};
   width: 100%;
   padding: 30px 0 30px 0;
 `;
 
-const StyledButtonsWrapper = styled.div`
-  margin-top: 30px;
+const ButtonsWrapper = styled.div`
   flex-grow: 1;
+  margin-top: 30px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+
+  @media (max-width: 767px) {
+    flex-grow: none;
+  }
 `;
 
 const NotePhotoWrapper = styled.div`
   max-width: 500px;
-  border: 2px solid ${({ theme }) => theme.dark};
-  box-shadow: ${({ theme }) => theme.boxShadow.inset};
+  border-radius: 25px;
 `;
 
 const NotePhoto = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 25px;
 `;
 
 const StyledButton = styled(Button)`
@@ -77,24 +91,24 @@ const NoteDetailTemplate = ({
   };
   return (
     <StyledWrapper>
-      <Heading>Tytuł: {title}</Heading>
-      <StyledTimeCreated size="m">Utworzona: {moment(createdAt).calendar()}</StyledTimeCreated>
-      <StyledNoteContent size="m">
-        <strong>Treść</strong>: {content}
-      </StyledNoteContent>
+      <Header>
+        <Heading>{title}</Heading>
+        <StyledTimeCreated size="m">Utworzona: {moment(createdAt).calendar()}</StyledTimeCreated>
+      </Header>
+      <StyledNoteContent size="m">{content}</StyledNoteContent>
       {photoUrl && (
         <NotePhotoWrapper>
           <NotePhoto src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`} />
         </NotePhotoWrapper>
       )}
-      <StyledButtonsWrapper>
+      <ButtonsWrapper>
         <StyledButton secondary onClick={goBack}>
           Wróć
         </StyledButton>
         <Button secondary onClick={handleDelete}>
           Usuń
         </Button>
-      </StyledButtonsWrapper>
+      </ButtonsWrapper>
     </StyledWrapper>
   );
 };

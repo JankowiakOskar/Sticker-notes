@@ -17,5 +17,5 @@ export const sumItemsWithKey = (arr, key) => {
   return arr.filter((item) => item[key] === true).reduce((totals) => totals + 1, 0);
 };
 
-export const firstTenChars = (string) =>
-  string.length <= 10 ? string : `${string.substring(0, 10)}...`;
+export const firstSevenChars = (string) =>
+  string.length <= 7 ? string : `${string.substring(0, 7)}...`;

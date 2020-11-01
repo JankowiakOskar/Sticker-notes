@@ -47,6 +47,7 @@ textarea {
   background-color: transparent;
   box-shadow: none;
   outline: none;
+  font-size: 1.6rem;
 }
 
 ul {

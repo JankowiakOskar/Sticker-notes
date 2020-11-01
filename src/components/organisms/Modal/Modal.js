@@ -9,6 +9,7 @@ import AddForm from 'components/organisms/AddForm/AddForm';
 import throwaway from 'assets/svg/throwaway.svg';
 import { connect } from 'react-redux';
 import { hideModal as hideModalAction, deleteItem as deleteItemAction } from 'actions';
+import { Close } from '@styled-icons/evil/Close';
 
 const StyledModal = Modal.styled`
   position: absolute;
@@ -21,6 +22,18 @@ const StyledModal = Modal.styled`
   top: 5%;
   transform: translate(-50%, 0);
   border-radius: 5px;
+  
+
+  @media (max-width: 767px) {
+    padding: ${({ type }) => (type === 'edit' ? '25px 20px 50px' : '25px 20px 20px')};
+    width: 90vw;
+    top: 30px;
+    left: 3%;
+    right: 5%;
+    transform: translate(0,0);
+    overflow-y: scroll;
+    max-height: 500px;
+  }
 `;
 
 const StyledHeading = styled(Heading)`
@@ -28,10 +41,15 @@ const StyledHeading = styled(Heading)`
   text-align: center;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.lightgrey};
+
+  @media (max-width: 767px) {
+    text-align: ${({ type }) => (type === 'edit' ? 'left' : 'center')};
+  }
 `;
 
 const StyledParagraph = styled(Paragraph)`
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  text-align: center;
+  width: 100%;
 `;
 
 const FormWrapper = styled.div`
@@ -40,6 +58,11 @@ const FormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 767px) {
+    height: auto;
+    padding: 50px 0 0;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -57,6 +80,10 @@ const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 767px) {
+    padding: 0 20px;
+  }
 `;
 
 const ThrowAway = styled.div`
@@ -66,10 +93,24 @@ const ThrowAway = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
+
+  @media (max-width: 767px) {
+    width: 80%;
+  }
 `;
 const Emoji = styled.span`
   margin: 0 0 0 10px;
   font-size: 2.2rem;
+`;
+
+const StyledClose = styled(Close)`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 35px;
+  height: 35px;
+  color: ${({ theme }) => theme.grey};
+  cursor: pointer;
 `;
 
 const ModalComponent = ({ modal, hideModal, deleteItem, matchedNote }) => {
@@ -89,7 +130,7 @@ const ModalComponent = ({ modal, hideModal, deleteItem, matchedNote }) => {
       case 'edit':
         return (
           <>
-            <StyledHeading size="l">
+            <StyledHeading type={typeModal} size="l">
               Edytuj notatkę{' '}
               <Emoji aria-label="add_note_emoji" role="img">
                 ✍
@@ -103,11 +144,8 @@ const ModalComponent = ({ modal, hideModal, deleteItem, matchedNote }) => {
       case 'delete':
         return (
           <>
-            <StyledHeading size="l">
+            <StyledHeading type={typeModal} size="l">
               Usuwanie notatki
-              <Emoji aria-label="add_note_emoji" role="img">
-                ❌
-              </Emoji>{' '}
             </StyledHeading>
             <ContentWrapper>
               <StyledParagraph size="m">Czy na pewno chcesz usunąć notatkę ? </StyledParagraph>
@@ -128,8 +166,14 @@ const ModalComponent = ({ modal, hideModal, deleteItem, matchedNote }) => {
     }
   };
   return (
-    <StyledModal isOpen={isShownModal} onBackgroundClick={hideModal} onEscapeKeydown={hideModal}>
+    <StyledModal
+      type={type}
+      isOpen={isShownModal}
+      onBackgroundClick={handleClick}
+      onEscapeKeydown={handleClick}
+    >
       {type && <ModalDisplayer typeModal={type} note={matchedNote} />}
+      <StyledClose onClick={handleClick} />
     </StyledModal>
   );
 };

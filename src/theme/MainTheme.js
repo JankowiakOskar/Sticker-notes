@@ -9,6 +9,7 @@ const theme = {
   lightblue: 'hsl(235, 89%, 72%)',
   red: 'hsl(0, 65%, 44%)',
   fontWeights: {
+    normal: '400',
     bold: '800',
     semiBold: '600',
   },
@@ -16,6 +17,8 @@ const theme = {
     xs: '0.8rem',
     s: '1.3rem',
     m: '1.4rem',
+    mobileLarge: '2rem',
+    desktopLarge: '2.1rem',
     l: '2.5rem',
     xl: '2.8rem',
     xxl: '4.5rem',

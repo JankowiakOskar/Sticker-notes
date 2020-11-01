@@ -8,10 +8,11 @@ const StyledInputElement = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: 350px;
 `;
 
 const StyledTextArea = styled.textarea`
-  max-width: 350px;
+  width: 100%;
   height: 100px;
   padding: 5px;
   border: 2px solid ${({ theme }) => theme.lightblue};
@@ -31,9 +32,6 @@ const StyledTextArea = styled.textarea`
         transform: translate(0, -130px);
       }
     `}
-  @media (max-width: 768px) {
-    width: 70%;
-  }
 `;
 const StyledLabel = styled(Label)`
   padding: 5px;

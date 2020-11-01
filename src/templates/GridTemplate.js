@@ -50,6 +50,7 @@ const StyledEmptyWrapper = styled.div`
   @media (max-width: 767px) {
     margin: 0;
     height: 300px;
+    width: 100%;
   }
 `;
 
@@ -74,7 +75,6 @@ const StyledHeader = styled.div`
 `;
 
 const StyledParagraph = styled(Paragraph)`
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
   padding: 5px 5px;
   margin-bottom: 10px;
 `;

@@ -18,18 +18,19 @@ import CheckBox from 'components/atoms/CheckBox/CheckBox';
 import Dropzone from 'components/molecules/Dropzone/Dropzone';
 import { Done } from '@styled-icons/material/Done';
 import { Delete } from '@styled-icons/material/Delete';
-import { firstTenChars } from 'utils';
+import { firstSevenChars } from 'utils';
 import Loader from 'react-loader-spinner';
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const StyledButton = styled(Button)`
   margin: 40px 0 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     margin: 20px 0 0;
   }
 `;
@@ -41,10 +42,6 @@ const CheckBoxWrapper = styled.div`
 const DropzoneCard = styled.div`
   display: flex;
   align-items: center;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
 `;
 
 const showAnimation = keyframes`
@@ -58,12 +55,27 @@ const showAnimation = keyframes`
   }
 `;
 
+const FileConfirmWrapper = styled.div`
+  @media (max-width: 767px) {
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+`;
+
 const FileConfirm = styled.span`
   padding: 0 10px;
   opacity: 0;
   font-size: ${({ theme }) => theme.fontSizes.m};
   color: ${({ theme }) => theme.grey};
   animation: ${showAnimation} 0.3s forwards ease-in-out;
+
+  @media (max-width: 767px) {
+    padding: 0;
+    flex-basis: 95%;
+  }
 `;
 const StyledDone = styled(Done)`
   width: 30px;
@@ -152,13 +164,13 @@ const AddForm = ({ addItem, updateItem, hideNewItemBar, hideModal, isLoading, no
                 allowFiles="image/*"
               />
               {values.note_file.length ? (
-                <>
-                  <FileConfirm>{`Dodano plik: ${firstTenChars(
+                <FileConfirmWrapper>
+                  <FileConfirm>{`Dodano plik: ${firstSevenChars(
                     values.note_file[0].name,
                   )}`}</FileConfirm>
                   <StyledDone />
                   <StyledDelete onClick={() => setFieldValue('note_file', [])} />
-                </>
+                </FileConfirmWrapper>
               ) : null}
             </DropzoneCard>
           )}

@@ -55,6 +55,10 @@ const StyledHeadingWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   grid-area: titleNote;
   margin-bottom: 10px;
+
+  @media (max-width: 767px) {
+    font-size: ${({ theme }) => theme.fontSizes.mobileLarge};
+  }
 `;
 
 const StyledParagraph = styled(Paragraph)`
@@ -62,8 +66,7 @@ const StyledParagraph = styled(Paragraph)`
   height: 100%;
 `;
 
-const Avatar = styled.img`
-  grid-area: avatar;
+const AvatarWrapper = styled.div`
   position: absolute;
   width: 80px;
   height: 80px;
@@ -74,8 +77,16 @@ const Avatar = styled.img`
   z-index: 999;
 
   @media (max-width: 767px) {
-    position: relative;
+    top: -5px;
+    right: 3px;
   }
+`;
+
+const Avatar = styled.img`
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledCardContent = styled.div`
@@ -152,16 +163,14 @@ const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, pho
   return (
     <StyledCard ref={cardRef} onClick={() => redirectRoute()} key={id}>
       <StyledHeadingWrapper favoritetype={pageType}>
-        <StyledHeading size="l">{title}</StyledHeading>
-        <StyledParagraph size="m" color="white">
+        <StyledHeading size="desktopLarge">{title}</StyledHeading>
+        <StyledParagraph size="s" color="white">
           Utworzona: {moment(createdAt).calendar()}
         </StyledParagraph>
         {photoUrl ? (
-          <Avatar
-            ref={avatarRef}
-            favoritetype={pageType}
-            src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`}
-          />
+          <AvatarWrapper ref={avatarRef} favoritetype={pageType}>
+            <Avatar src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`} />
+          </AvatarWrapper>
         ) : null}
       </StyledHeadingWrapper>
       <StyledCardContent>

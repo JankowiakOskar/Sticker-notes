@@ -18,12 +18,6 @@ const DropzoneWrapper = styled.div`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
-  @media (max-width: 320px) {
-    padding: 10px;
-    width: 80px;
-    height: 80px;
-  }
-
   ${({ isDisabled }) =>
     isDisabled &&
     css`

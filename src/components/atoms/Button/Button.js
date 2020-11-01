@@ -10,6 +10,7 @@ const Button = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.dark};
   color: ${({ theme }) => theme.white};
+  font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
 
@@ -32,6 +33,7 @@ const Button = styled.button`
       border: 1px solid ${({ theme }) => theme.blue};
       box-shadow: none;
       color: ${({ theme }) => theme.grey};
+      font-weight: ${({ theme }) => theme.fontWeights.normal};
     `}
 `;
 
