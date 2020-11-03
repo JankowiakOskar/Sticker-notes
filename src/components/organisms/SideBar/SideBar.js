@@ -16,6 +16,7 @@ import Circle from 'components/atoms/Circle/Circle';
 import { sumItemsWithKey } from 'utils';
 import gsap from 'gsap';
 import usePreviousLiked from 'hooks/usePrevious';
+import useWidthdevice from 'hooks/useWidthdevice';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -32,14 +33,14 @@ const StyledWrapper = styled.div`
   z-index: 9999;
 
   @media (max-width: 767px) {
-    top: 100%;
-    left: 0;
-    transform: translate(0, -100%);
+    bottom: 0;
+    top: calc(100% - 70px);
     width: 100%;
-    height: 80px;
+    height: 70px;
     z-index: 9999;
     flex-direction: row;
     justify-content: flex-start;
+    border-radius: 15px 15px 0 0;
   }
 `;
 
@@ -55,7 +56,7 @@ const StyledNav = styled.nav`
 
   @media (max-width: 767px) {
     flex-direction: row;
-    margin-right: 45px;
+    margin: 0 45px 0 0;
     justify-content: center;
   }
 `;
@@ -70,11 +71,13 @@ const StyledIconWrapper = styled.li`
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
-  transition: all 0.2s ease-in-out;
+  transition: background 0.15s linear;
+
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.blue)};
+    background-color: ${({ theme, favoritetype }) =>
+      favoritetype ? theme.red : 'rgba(104, 113, 209, 0.3)'};
   }
 
   &.active {
@@ -173,6 +176,7 @@ const SideBar = ({ isShownNewItemBar, isShownModal, showNewItemBar, logOutUser, 
   const circleRef = useRef(null);
   const currentLikedNotes = sumItemsWithKey(allNotes, 'favoriteNote');
   const previousLikedNotes = usePreviousLiked(currentLikedNotes, allNotes, 'favoriteNote');
+  const { isInWidth } = useWidthdevice('767');
 
   useEffect(() => {
     if (previousLikedNotes !== currentLikedNotes) {
@@ -221,28 +225,31 @@ const SideBar = ({ isShownNewItemBar, isShownModal, showNewItemBar, logOutUser, 
       <StyledIconWrapper logOutIcon data-tip="Wyloguj się" data-for="logOut" onClick={logOutUser}>
         <StyledLogoutIcon />
       </StyledIconWrapper>
-
-      <ReactTooltip
-        backgroundColor="#5D65D3"
-        id="allNotes"
-        effect="solid"
-        type="info"
-        place="right"
-      />
-      <ReactTooltip
-        backgroundColor="#5D65D3"
-        id="favoriteNotes"
-        effect="solid"
-        type="info"
-        place="right"
-      />
-      <ReactTooltip
-        backgroundColor="#5D65D3"
-        id="logOut"
-        effect="solid"
-        type="info"
-        place="right"
-      />
+      {isInWidth && (
+        <>
+          <ReactTooltip
+            backgroundColor="#5D65D3"
+            id="allNotes"
+            effect="solid"
+            type="info"
+            place="right"
+          />
+          <ReactTooltip
+            backgroundColor="#5D65D3"
+            id="favoriteNotes"
+            effect="solid"
+            type="info"
+            place="right"
+          />
+          <ReactTooltip
+            backgroundColor="#5D65D3"
+            id="logOut"
+            effect="solid"
+            type="info"
+            place="right"
+          />
+        </>
+      )}
     </StyledWrapper>
   );
 };

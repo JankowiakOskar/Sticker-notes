@@ -36,6 +36,10 @@ const StyledInput = styled(Input)`
 const StyledError = styled.p`
   color: ${({ theme }) => theme.red};
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
+
+  @media (max-width: 767px) {
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
 `;
 
 const InputElement = (props) => {

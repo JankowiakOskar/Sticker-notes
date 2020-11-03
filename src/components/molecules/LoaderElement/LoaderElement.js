@@ -11,10 +11,14 @@ const LoaderContent = styled.div`
 `;
 
 const StyledHeading = styled(Heading)`
-  font-size: 6rem;
+  font-size: ${({ theme }) => theme.fontSizes.huge};
   color: ${({ theme }) => theme.white};
   text-shadow: -1px 0px 2px rgba(150, 150, 150, 1);
   text-align: center;
+
+  @media (max-width: 767px) {
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+  }
 `;
 
 const LoaderElement = () => {

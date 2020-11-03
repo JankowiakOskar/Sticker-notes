@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+
+
   *, *::after, *::before{
     margin: 0;
     padding: 0;
@@ -9,10 +11,20 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     width: 100vw;
+    height: 100%;
     font-family: 'Montserrat';
     line-height: 1.5;
     font-size: 10px;
-    overflow-x: hidden;
+    overflow: hidden;
+  }
+
+  #root {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
   }
 
   body::-webkit-scrollbar {
@@ -26,7 +38,6 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: #231E3E;
   outline: 1px solid slategrey;
-  border-radius: 5px;
 }
 
 button {

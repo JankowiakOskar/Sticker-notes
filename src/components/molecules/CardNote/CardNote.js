@@ -33,7 +33,7 @@ const StyledCard = styled.div`
 
 const StyledHeadingWrapper = styled.div`
   position: relative;
-  flex: 1;
+  flex: 0.8;
   padding: 10px 20px;
   border-radius: 18px 18px 0px 0px;
   background-color: ${({ theme, favoritetype }) => (favoritetype ? theme.red : theme.dark)};
@@ -77,7 +77,7 @@ const AvatarWrapper = styled.div`
   z-index: 999;
 
   @media (max-width: 767px) {
-    top: -5px;
+    top: 3px;
     right: 3px;
   }
 `;
@@ -97,17 +97,13 @@ const StyledCardContent = styled.div`
 
 const StyledCardFooter = styled.div`
   position: relative;
-  flex: 1;
+  flex: 0.6;
   border-top: 2px solid ${({ theme }) => theme.dark};
-  border-radius: 25px 25px 18px 18px;
+  border-radius: 20px 20px 18px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.dark};
-
-  @media (max-width: 767px) {
-    flex: 1.5;
-  }
 `;
 
 const StyledKebabMenu = styled(KebabMenu)`
@@ -119,8 +115,8 @@ const StyledKebabMenu = styled(KebabMenu)`
 
 const StyledHeartIcon = styled(HeartFill)`
   margin-left: 20px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   color: ${({ theme, isLiked }) => (isLiked ? theme.red : theme.white)};
   transition: color 0.15s ease-in-out;
   z-index: 6;
@@ -139,12 +135,12 @@ const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, pho
   const pageType = useContext(PageContext);
   const cardRef = useRef(null);
   const avatarRef = useRef(null);
+  const tl = useRef(null);
 
   const showUpAnime = () => {
     const card = cardRef.current;
-    const avatar = avatarRef.current;
-    const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
-    tl.fromTo([card, avatar], { y: '-=30' }, { autoAlpha: 1, y: '0', duration: 0.4 });
+    tl.current = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+    tl.current.fromTo(card, { autoAlpha: 0, y: '-=30' }, { y: 0, autoAlpha: 1, duration: 0.5 });
   };
 
   const redirectRoute = () => {

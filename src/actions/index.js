@@ -25,8 +25,6 @@ export const HIDE_NEW_ITEM_BAR = 'HIDE_NEW_ITEM_BAR';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE MODAL';
 
-const JWT_TOKEN = getItemFromLocalStorage('token');
-
 const createFormData = (fileName, file, dataObj) => {
   const formData = new FormData();
   formData.append(`files.${fileName}`, file, fileName);
@@ -36,6 +34,7 @@ const createFormData = (fileName, file, dataObj) => {
 };
 
 export const getItems = (itemType) => {
+  const JWT_TOKEN = getItemFromLocalStorage('token');
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
@@ -64,6 +63,7 @@ export const getItems = (itemType) => {
 };
 
 export const addItem = (values, itemType) => {
+  const JWT_TOKEN = getItemFromLocalStorage('token');
   const { note_file, note_title, note_content, favoriteNote } = values;
 
   const dataUpload = note_file
@@ -101,6 +101,7 @@ export const addItem = (values, itemType) => {
 };
 
 export const deleteItem = (itemType, id) => {
+  const JWT_TOKEN = getItemFromLocalStorage('token');
   return async (dispatch, getState) => {
     const currentData = getState().data[itemType];
 
@@ -128,6 +129,7 @@ export const deleteItem = (itemType, id) => {
 };
 
 export const updateItem = (itemType, id, values) => {
+  const JWT_TOKEN = getItemFromLocalStorage('token');
   const { note_file, note_title, note_content, favoriteNote } = values;
 
   const dataUpload = note_file

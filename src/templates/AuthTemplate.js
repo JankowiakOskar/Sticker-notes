@@ -10,7 +10,7 @@ import AuthFormWrapper from 'components/organisms/AuthFormWrapper/AuthFormWrappe
 import { AuthTypeContext } from 'contexts';
 
 const Wrapper = styled.div`
-  max-height: 600px;
+  height: 600px;
   width: 1000px;
   padding: 20px 0;
   display: flex;
@@ -33,20 +33,26 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 878px) {
-    max-height: none;
-    height: 100vh;
-    width: 100%;
+    margin: 50px 0 0 0;
     flex-direction: column;
+    justify-content: flex-start;
+    max-height: none;
+    background: none;
+    box-shadow: none;
+    width: auto;
+    height: auto;
+    padding: 0;
   }
 `;
 
 const FormWrapper = styled.div`
   height: 100%;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin: 0 0 0 30px;
+
+  @media (max-width: 878px) {
+    margin: 0;
+  }
 `;
 
 const DescriptionWrapper = styled.div`
@@ -63,8 +69,7 @@ const DescriptionWrapper = styled.div`
   }
 
   @media (max-width: 878px) {
-    justify-content: flex-end;
-    max-height: 100px;
+    padding: 0;
   }
 `;
 
@@ -119,8 +124,10 @@ const StyledButton = styled(Button)`
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 878px) {
-    margin: 0;
-    height: 50px;
+    max-height: 60px;
+    margin-top: 50px;
+    background-color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.dark};
   }
 `;
 
@@ -134,7 +141,7 @@ const AuthTemplate = () => {
       <DescriptionWrapper>
         <StyledHeading size="xxl">Sticker Notes</StyledHeading>
         <StyledParagraph size="m">
-          Twój personalnyorganiser, przechowuje Twoje notatki i zdjęcia !
+          Twój personalny organiser, przechowuje Twoje notatki i zdjęcia !
         </StyledParagraph>
         <AuthImage />
         <StyledButton>

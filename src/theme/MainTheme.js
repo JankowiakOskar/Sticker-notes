@@ -22,6 +22,7 @@ const theme = {
     l: '2.5rem',
     xl: '2.8rem',
     xxl: '4.5rem',
+    huge: '6rem',
   },
   screenSizes: {
     small: '576px',

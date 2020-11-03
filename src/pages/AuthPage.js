@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import AuthTemplate from 'templates/AuthTemplate';
 
 const Wrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-color: ${({ theme }) => theme.dark};
   display: flex;
@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  @media (max-width: 878px) {
+    justify-content: flex-start;
+  }
 `;
 
 const AuthPage = ({ location: { pathname } }) => {

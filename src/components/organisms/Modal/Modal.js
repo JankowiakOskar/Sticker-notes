@@ -25,13 +25,13 @@ const StyledModal = Modal.styled`
   
 
   @media (max-width: 767px) {
-    padding: ${({ type }) => (type === 'edit' ? '25px 20px 50px' : '25px 20px 20px')};
+    padding: ${({ type }) => (type === 'edit' ? '25px 20px 30px' : '25px 20px 20px')};
     width: 90vw;
-    top: 30px;
+    top: 10px;
     left: 3%;
     right: 5%;
     transform: translate(0,0);
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 500px;
   }
 `;

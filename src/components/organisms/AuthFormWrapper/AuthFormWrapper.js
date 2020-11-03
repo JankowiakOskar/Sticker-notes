@@ -14,10 +14,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: ${({ theme }) => theme.white};
   opacity: 0.9;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+
+  @media (max-width: 878px) {
+    height: auto;
+  }
 
   @media (max-width: 465px) {
     width: 355px;
@@ -80,7 +84,7 @@ const lastRegisterStep = Yup.object({
     .required('Brak hasła')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      'Wymagane 8 znaków, jedna duża litra i jedna cyfra',
+      'Wymagane 8 znaków, duża litra i jedna cyfra',
     ),
   confirmedPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],

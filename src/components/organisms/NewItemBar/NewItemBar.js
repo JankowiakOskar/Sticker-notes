@@ -21,7 +21,7 @@ const StyledWrapper = styled.div`
   z-index: 9999;
 
   @media (max-width: 767px) {
-    width: 97%;
+    width: 90vw;
     height: 100%;
     border-radius: 25px 0 0 25px;
     overflow-y: scroll;

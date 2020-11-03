@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import LoaderElement from 'components/molecules/LoaderElement/LoaderElement';
 import { connect } from 'react-redux';
 import { hideLoader as hideLoaderAction } from 'actions/authActions';
+import { getItems as getItemsAction, deleteAllItems as deleteAllItemsAction } from 'actions';
 import PageRedirect from 'providers/PageRedirect';
 import gsap from 'gsap';
-import { getItems as getItemsAction } from 'actions';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -21,12 +21,8 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.dark};
 `;
 
-const LoadingPage = ({ isShownLoader, hideLoader, getItems }) => {
+const LoadingPage = ({ isShownLoader, hideLoader }) => {
   const wrapperRef = useRef(null);
-
-  useEffect(() => {
-    getItems('notes');
-  }, []);
 
   const showUpAnimation = () => {
     const wrapper = wrapperRef.current;
@@ -60,7 +56,6 @@ const LoadingPage = ({ isShownLoader, hideLoader, getItems }) => {
       clearTimeout(hidding);
     };
   }, [isShownLoader, hideLoader]);
-
   return (
     <>
       {isShownLoader ? (
@@ -82,7 +77,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideLoader: () => dispatch(hideLoaderAction()),
-    getItems: (itemType) => dispatch(getItemsAction(itemType)),
   };
 };
 

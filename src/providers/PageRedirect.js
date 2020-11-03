@@ -6,7 +6,6 @@ import routes from 'routes';
 
 const PageRedirect = ({ children, isAuth }) => {
   const history = useHistory();
-
   useEffect(() => {
     let redirectToHome;
     let redirectToLogin;

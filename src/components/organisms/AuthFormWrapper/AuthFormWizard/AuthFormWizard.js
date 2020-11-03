@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { createUser as createUserAction, loginUser as loginUserAction } from 'actions/authActions';
+import {
+  createUser as createUserAction,
+  loginUser as loginUserAction,
+  removeServerError as removeServerErrorAction,
+} from 'actions/authActions';
+import { sleep } from 'utils';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import Button from 'components/atoms/Button/Button';
+import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import ProgressStepper from 'components/molecules/Stepper/ProgressStepper';
 
 const StyledForm = styled.form`
@@ -18,6 +24,11 @@ const StyledForm = styled.form`
   align-items: center;
   box-shadow: ${({ theme }) => theme.boxShadow.inset};
   overflow: hidden;
+`;
+
+const ErrorMessage = styled(Paragraph)`
+  color: ${({ theme }) => theme.red};
+  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
 `;
 
 const ButtonsWrapper = styled.div`
@@ -54,12 +65,14 @@ const AuthFormWizard = ({
   isSubmitting,
   createUser,
   loginUser,
+  serverError,
+  removeServerError,
 }) => {
   const childrenArr = React.Children.toArray(children.props.children);
   const [step, setStep] = useState(1);
   const currentStep = childrenArr[step - 1];
   const isLastStep = step === childrenArr.length;
-
+  console.log(removeServerErrorAction);
   const registerBtnContent = () => {
     switch (isSubmitting) {
       case true:
@@ -78,6 +91,12 @@ const AuthFormWizard = ({
   useEffect(() => {
     setStep(1);
   }, [authType]);
+
+  useEffect(() => {
+    if (serverError.statusCode) {
+      setTimeout(removeServerError, 2500);
+    }
+  }, [serverError]);
 
   return (
     <Formik
@@ -108,6 +127,11 @@ const AuthFormWizard = ({
             />
           )}
           {currentStep}
+          {serverError.statusCode && (
+            <ErrorMessage size="m">
+              Error {serverError.statusCode}: {serverError.message}
+            </ErrorMessage>
+          )}
           <ButtonsWrapper step={step}>
             {authType === 'login' ? (
               <StyledButton type="submit" disabled={isSubmitting}>
@@ -163,14 +187,15 @@ AuthForm.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { isSubmitting } = state.auth;
-  return { isSubmitting };
+  const { isSubmitting, error: serverError } = state.auth;
+  return { isSubmitting, serverError };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createUser: (userData) => dispatch(createUserAction(userData)),
     loginUser: (userData) => dispatch(loginUserAction(userData)),
+    removeServerError: () => dispatch(removeServerErrorAction()),
   };
 };
 

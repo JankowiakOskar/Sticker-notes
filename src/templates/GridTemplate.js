@@ -12,12 +12,12 @@ import gsap from 'gsap';
 import { getArrNum } from 'utils';
 
 const StyledGrid = styled.div`
-  width: 100%;
+  width: 95%;
   margin: 0 0 0 80px;
   min-height: 500px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 30px 0px;
+  gap: 45px;
 
   @media (max-width: 1600px) {
     width: 85%;
@@ -30,7 +30,7 @@ const StyledGrid = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    gap: 40px;
+    gap: 60px;
     margin: 30px 0 0 0;
     padding: 0px 20px 80px;
   }
@@ -85,9 +85,8 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledHeading = styled(Heading)`
-  @media (max-width: 767px) {
-    font-size: ${({ theme }) => theme.fontSizes.l};
-  }
+  font-size: ${({ theme }) => theme.fontSizes.mobileLarge};
+  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
 `;
 
 const Emoji = styled.span`
@@ -99,6 +98,7 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState([]);
   const headerRef = useRef(null);
+  const emptyItemRef = useRef(null);
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -130,7 +130,14 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
       const searchInput = header.querySelector("[data-id='searchInput'");
       const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
 
-      tl.from([headerTitle, countNotes, searchInput], { autoAlpha: 0, stagger: 0.05 });
+      tl.from([headerTitle, countNotes, searchInput], { y: '-30', autoAlpha: 0, stagger: 0.05 });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (emptyItemRef.current) {
+      const emptyItem = emptyItemRef.current;
+      gsap.fromTo(emptyItem, { y: '-=50', autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5 });
     }
   }, []);
 
@@ -151,7 +158,7 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
         ))}
       </StyledGrid>
     ) : (
-      <StyledEmptyWrapper>
+      <StyledEmptyWrapper ref={emptyItemRef}>
         <EmptyBackGround />
         <StyledHeading size="l">
           Nie znajduję notatki...
@@ -167,7 +174,9 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
   return (
     <UserTemplate>
       <StyledHeader ref={headerRef}>
-        <StyledHeading data-id="headerTitle">{headingTitle}</StyledHeading>
+        <Heading size="l" data-id="headerTitle">
+          {headingTitle}
+        </Heading>
         <StyledParagraph data-id="countNotes" size="m" styled>
           Ilość {favoritetype ? 'ulubionych' : 'wszystkich'} notatek: {calcItems()}
         </StyledParagraph>
@@ -190,7 +199,7 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
           )}
         </>
       ) : (
-        <StyledEmptyWrapper>
+        <StyledEmptyWrapper ref={emptyItemRef}>
           <EmptyBackGround />
           <StyledHeading size="l">
             {favoritetype ? 'Brak ulubionych notatek...' : 'Brak notatek...'}
@@ -199,9 +208,7 @@ const GridTemplate = ({ children, notes, headingTitle, favoritetype }) => {
             </Emoji>
           </StyledHeading>
           <StyledParagraph size="m">
-            {searchValue
-              ? `Brak wyszukiwanej treści: "${searchValue}"`
-              : 'Proponuję dodać kilka nowych.'}
+            {searchValue ? `Brak wyszukiwanej treści: "${searchValue}"` : 'Dodaj kilka nowych.'}
           </StyledParagraph>
         </StyledEmptyWrapper>
       )}

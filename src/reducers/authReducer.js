@@ -7,6 +7,7 @@ import {
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
   HIDE_LOADER,
+  REMOVE_SERVER_ERROR,
 } from 'actions/authActions';
 
 const initialState = {
@@ -15,8 +16,8 @@ const initialState = {
   isSubmitting: false,
   user: {},
   error: {
-    status: '',
-    statusText: '',
+    statusCode: '',
+    message: '',
   },
 };
 
@@ -37,8 +38,8 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isSubmitting: !state.isSubmitting,
         error: {
-          status: action.payload.status,
-          statusText: action.payload.statusText,
+          statusCode: action.payload.statusCode,
+          message: action.payload.message,
         },
       };
     case LOGIN_USER_REQUEST:
@@ -56,8 +57,8 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isSubmitting: !state.isSubmitting,
         error: {
-          status: action.payload.status,
-          statusText: action.payload.statusText,
+          statusCode: action.payload.statusCode,
+          message: action.payload.message,
         },
       };
     case LOGOUT_USER:
@@ -71,6 +72,15 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isShownLoader: !state.isShownLoader,
+      };
+    }
+    case REMOVE_SERVER_ERROR: {
+      return {
+        ...state,
+        error: {
+          statusCode: action.payload.statusCode,
+          message: action.payload.message,
+        },
       };
     }
     default:
