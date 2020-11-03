@@ -137,6 +137,8 @@ const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, pho
   const avatarRef = useRef(null);
   const tl = useRef(null);
 
+  console.log(photoUrl);
+
   const showUpAnime = () => {
     const card = cardRef.current;
     tl.current = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
@@ -165,7 +167,7 @@ const CardNote = ({ id, title, content, createdAt, favoriteNote, updateItem, pho
         </StyledParagraph>
         {photoUrl ? (
           <AvatarWrapper ref={avatarRef} favoritetype={pageType}>
-            <Avatar src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`} />
+            <Avatar src={photoUrl} />
           </AvatarWrapper>
         ) : null}
       </StyledHeadingWrapper>

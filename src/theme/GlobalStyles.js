@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat';
     line-height: 1.5;
     font-size: 10px;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   #root {

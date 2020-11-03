@@ -98,7 +98,7 @@ const NoteDetailTemplate = ({
       <StyledNoteContent size="m">{content}</StyledNoteContent>
       {photoUrl && (
         <NotePhotoWrapper>
-          <NotePhoto src={`https://organiser-strapi-mongodb.herokuapp.com${photoUrl}`} />
+          <NotePhoto src={photoUrl} />
         </NotePhotoWrapper>
       )}
       <ButtonsWrapper>

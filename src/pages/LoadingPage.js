@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import LoaderElement from 'components/molecules/LoaderElement/LoaderElement';
 import { connect } from 'react-redux';
 import { hideLoader as hideLoaderAction } from 'actions/authActions';
-import { getItems as getItemsAction, deleteAllItems as deleteAllItemsAction } from 'actions';
 import PageRedirect from 'providers/PageRedirect';
 import gsap from 'gsap';
 
